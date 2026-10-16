@@ -55,3 +55,30 @@ export function useState(initialValue) {
 
   return [stateStore[currentCursor], setState];
 }
+
+/**
+ * Attaches one delegated listener per supported event type to the root container.
+ */
+export function setupEventDelegation(rootContainer) {
+  const supportedEvents = ['click', 'input', 'keydown'];
+
+  supportedEvents.forEach((eventType) => {
+    rootContainer.addEventListener(eventType, (nativeEvent) => {
+      let target = nativeEvent.target;
+
+      const handlerProp =
+        `on${eventType.charAt(0).toUpperCase()}${eventType.slice(1)}`;
+
+      while (target && target !== rootContainer) {
+        const handler = target.__vnode?.props?.[handlerProp];
+
+        if (typeof handler === 'function') {
+          handler(nativeEvent);
+          break;
+        }
+
+        target = target.parentNode;
+      }
+    });
+  });
+}
