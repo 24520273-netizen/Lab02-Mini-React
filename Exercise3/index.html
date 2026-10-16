@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini React Data Feed</title>
+  </head>
+
+  <body>
+    <main id="app"></main>
+
+    <script type="module">
+      import { DataFeed } from './data-feed.jsx';
+      import { renderToDOM } from '../Exercise1/mini-react.js';
+      import {
+        resetCursor,
+        setRenderer,
+        setupEventDelegation,
+      } from '../Exercise2/reactive-engine.js';
+
+      const root = document.getElementById('app');
+
+      function renderApp() {
+        resetCursor();
+        root.replaceChildren(renderToDOM(DataFeed()));
+      }
+
+      setRenderer(renderApp);
+      setupEventDelegation(root);
+      renderApp();
+    </script>
+  </body>
+</html>
