@@ -79,11 +79,9 @@ function renderVNode(vNode, insideSvg) {
       return;
     }
 
-    if (name.startsWith('on') && typeof value === 'function') {
-      const eventName = name.slice(2).toLowerCase();
-      dom.addEventListener(eventName, value);
-      return;
-    }
+  if (name.startsWith('on') && typeof value === 'function') {
+  return;
+}
 
     if (name === 'className') {
       if (isSvg) {
